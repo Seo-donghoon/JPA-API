@@ -19,16 +19,36 @@ public class JpaMain {
           SQL 은 데이터베이스 테이블을 대상으로 쿼리
 
         */
+
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-            List<Member> result = em.createQuery("select m from Member as m", Member.class).getResultList();
+
+            Member member = new Member(200L,"hoony200");
+            em.persist(member);
+
+            em.flush();
+
+
+
+
+          /*  List<Member> result = em.createQuery("select m from Member as m", Member.class).getResultList();
 
             for(Member member : result){
                 System.out.println("member.name= "+ member.getName());
 
 
-            }
+            }*/
+         /*   Member member1 = new Member(150L,"Hoon");
+            Member member2 = new Member(160L,"Hoon2");
+            em.persist(member1);
+            em.persist(member2);*/
+            System.out.println("===================");
+            Member fineMember1 = em.find(Member.class, 101L);
+            Member fineMember2 = em.find(Member.class, 101L);
+            //Member member = em.find(Member.class,150L);
+            member.setName("Tory");
+
 
             //조회
        /*    Member findMember = em.find(Member.class, 1L);
@@ -47,10 +67,17 @@ public class JpaMain {
             em.persist(member);
 */
 
-
         //삭제
         //em.remove(fineMember);
 
+ /*           //비영속
+        Member member = new Member();
+        member.setId(101L);
+        member.setName("HElloJpa");
+        //영속
+            em.persist(member);
+           Member findMember =  em.find(Member.class,101l);
+            System.out.println(findMember.getId());*/
             tx.commit();
         } catch (Exception e){
             tx.rollback();
